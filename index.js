@@ -36,12 +36,22 @@ async function run() {
     const petsCollection = client.db('petAdoption').collection('pets');
     const usersCollection = client.db('petAdoption').collection('users');
     const servicesCollection = client.db('petAdoption').collection('services');
+    const blogsCollection = client.db('petAdoption').collection('blogs');
+    const teamsCollection = client.db('petAdoption').collection('teams');
 
     app.get('/pets', async (req, res) => {
       const result = await petsCollection.find().toArray();
       res.send(result);
     });
 
+    app.get('/pets/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await petsCollection.findOne(query);
+      res.send(result);
+    });
+
+    
     app.get('/users', async (req, res) => { 
       const result = await usersCollection.find().toArray();
       res.send(result);
@@ -49,6 +59,15 @@ async function run() {
 
     app.get('/services', async (req, res) => {
       const result = await servicesCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get('/blogs', async (req, res) => {
+      const result = await blogsCollection.find().toArray();
+      res.send(result);
+    });
+    app.get('/teams', async (req, res) => {
+      const result = await teamsCollection.find().toArray();
       res.send(result);
     });
 
