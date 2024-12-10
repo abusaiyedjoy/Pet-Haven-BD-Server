@@ -40,7 +40,11 @@ async function run() {
     const teamsCollection = client.db('petAdoption').collection('teams');
 
     app.get('/pets', async (req, res) => {
-      const result = await petsCollection.find().toArray();
+      const categoty = req.query.category;
+      let query = {};
+      if(categoty !== undefined && categoty !== 'null') query = {categoty}
+      console.log(categoty);
+      const result = await petsCollection.find(query).toArray();
       res.send(result);
     });
 
